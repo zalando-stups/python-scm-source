@@ -1,7 +1,9 @@
-import os
-from scm_source import generate_scm_source
+from click.testing import CliRunner
 
-def test_generate_scm_source(monkeypatch):
-    monkeypatch.setattr('subprocess.check_output', lambda x: b'test')
-    generate_scm_source('test.json', 'JohnDoe')
-    os.unlink('test.json')
+from scm_source.cli import main
+
+def test_main(monkeypatch):
+    monkeypatch.setattr('scm_source.cli.generate_scm_source', lambda x, y: True)
+    runner = CliRunner()
+    result = runner.invoke(main, [], catch_exceptions=False)
+    assert 'Generating scm-source.json.. LOCALLY MODIFIED' in result.output
