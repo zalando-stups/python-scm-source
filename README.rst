@@ -31,6 +31,15 @@ Installation
 
     $ sudo pip3 install --upgrade scm-source
 
+Usage
+=====
+
+.. code-block:: bash
+
+    $ scm-source # generate scm-source.json in current directory
+    $ scm-source -f target/scm-source.json
+    $ scm-source --author "John Doe"
+
 
 Releasing
 =========
