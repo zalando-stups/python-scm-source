@@ -38,7 +38,7 @@ setup(
     author_email='henning.jacobs@zalando.de',
     url='https://github.com/zalando-stups/python-scm-source',
     license='Apache License Version 2.0',
-    install_requires=['clickclick'],
+    install_requires=['clickclick', 'PyYAML'],
     tests_require=['pytest-cov', 'pytest'],
     cmdclass={'test': PyTest},
     entry_points={'console_scripts': ['scm-source = scm_source.cli:main']},
