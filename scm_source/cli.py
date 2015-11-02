@@ -1,18 +1,13 @@
 import click
-import json
-import subprocess
+from clickclick import Action
+from .api import generate_scm_source
 
 
 @click.command()
-@click.option('-f', '--file', type=click.File('wb'), default='scm-source.json')
-@click.option('--author', envvar='USER')
+@click.option('-f', '--file', metavar='PATH', default='scm-source.json', help='file path to write to')
+@click.option('--author', metavar='USER', envvar='USER', help='author of the scm-source.json (default: current $USER)')
 def main(file, author):
-
-    rev = subprocess.check_output(['git', 'rev-parse', 'HEAD'])
-    url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url'])
-    status = subprocess.check_output(['git', 'status', '--procelain'])
-    if status:
-        rev += ' (locally modified)'
-    data = {'url': 'git:{}'.format(url), 'revision': rev, 'author': author, 'status': status}
-
-    json.dump(file, data)
+    with Action('Generating {}..'.format(file)) as act:
+        locally_modified = generate_scm_source(file, author)
+        if locally_modified:
+            act.warning('LOCALLY MODIFIED')
