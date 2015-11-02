@@ -22,7 +22,8 @@ Python SCM Source Generator
    :target: https://pypi.python.org/pypi/scm-source/
    :alt: License
 
-A simple command line tool to generate ``scm-source.json`` files.
+A simple command line tool to generate ``scm-source.json`` files according to the `STUPS documentation`_.
+
 
 Installation
 ============
@@ -30,6 +31,7 @@ Installation
 .. code-block:: bash
 
     $ sudo pip3 install --upgrade scm-source
+
 
 Usage
 =====
@@ -39,6 +41,13 @@ Usage
     $ scm-source # generate scm-source.json in current directory
     $ scm-source -f target/scm-source.json
     $ scm-source --author "John Doe"
+
+You can also use it from your Python scripts:
+
+.. code-block:: python
+
+    from scm_source import generate_scm_source
+    generate_scm_source('foo/bar/scm-source.json', 'John Doe')
 
 
 Releasing
@@ -50,3 +59,4 @@ Uploading a new version to PyPI:
 
     $ ./release.sh <NEW-VERSION>
 
+.. _STUPS Documentation: http://stups.readthedocs.org/en/latest/user-guide/application-development.html#docker
