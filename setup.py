@@ -33,6 +33,7 @@ setup(
     version=__version__,
     description='CLI to generate scm-source.json',
     long_description=open('README.rst').read(),
+    keywords='stups scm source git revision',
     author='Henning Jacobs',
     author_email='henning.jacobs@zalando.de',
     url='https://github.com/zalando-stups/python-scm-source',
