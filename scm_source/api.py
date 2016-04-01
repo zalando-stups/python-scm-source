@@ -15,7 +15,7 @@ def get_scm_source_data(author: str):
     status = get_output(['git', 'status', '--porcelain'])
     if status:
         rev = '{} (locally modified)'.format(rev)
-    data = {'url': 'git:{}'.format(url), 'revision': rev, 'author': author, 'status': status}
+    data = {'url': 'git:{}'.format(url), 'revision': rev, 'author': author or 'UNKNOWN', 'status': status}
     return data
 
 
