@@ -41,6 +41,7 @@ Usage
     $ scm-source # generate scm-source.json in current directory
     $ scm-source -f target/scm-source.json
     $ scm-source --author "John Doe"
+    $ scm-source my/path/to/git/repo -f output/scm-source.json
 
 You can also use it from your Python scripts:
 
