@@ -6,7 +6,7 @@ from .api import generate_scm_source
 @click.command()
 @click.option('-f', '--file', metavar='PATH', default='scm-source.json', help='file path to write to')
 @click.option('--author', metavar='USER', envvar='USER', help='author of the scm-source.json (default: current $USER)')
-@click.argument('directory', nargs=-1)
+@click.argument('directory', nargs=-1, type=click.Path(exists=True))
 def main(file, author, directory):
     if not directory:
         directory = None

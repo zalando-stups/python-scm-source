@@ -13,7 +13,10 @@ def get_scm_source_data(author: str, directory: str=None):
     '''Get SCM source data of current working directory'''
     base = ['git']
     if directory:
-        base += ['--git-dir={}'.format(os.path.join(directory, '.git')), '--work-tree={}'.format(directory)]
+        git_dir = os.path.join(directory, '.git')
+        if not os.path.isdir(git_dir):
+            raise FileNotFoundError("No such directory: '{}'".format(git_dir))
+        base += ['--git-dir={}'.format(git_dir), '--work-tree={}'.format(directory)]
     rev = get_output(base + ['rev-parse', 'HEAD'])
     url = get_output(base + ['config', '--get', 'remote.origin.url'])
     status = get_output(base + ['status', '--porcelain'])
