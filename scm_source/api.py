@@ -26,9 +26,14 @@ def get_scm_source_data(author: str, directory: str=None):
     return data
 
 
-def generate_scm_source(path: str, author: str, directory: str=None):
+def generate_scm_source(path: str, author: str, directory: str=None, fail_on_modified: bool = False):
     '''Generate and write scm-source.json'''
     data = get_scm_source_data(author, directory)
+    is_locally_modified = data['status']
+
+    if is_locally_modified and fail_on_modified:
+        raise RuntimeError('Code tree has been modified')
+
     with open(path, 'w', encoding='utf-8') as fd:
         json.dump(data, fd)
-    return data['status']
+    return is_locally_modified

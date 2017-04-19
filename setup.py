@@ -14,6 +14,7 @@ def read_version(package):
             if line.startswith('__version__ = '):
                 return line.split()[-1].strip().strip("'")
 
+
 __version__ = read_version('scm_source')
 
 
