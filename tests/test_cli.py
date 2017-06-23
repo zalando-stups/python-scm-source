@@ -5,14 +5,14 @@ from scm_source.cli import main
 
 
 def test_main(monkeypatch):
-    monkeypatch.setattr('scm_source.cli.generate_scm_source', lambda x, y, z, q: True)
+    monkeypatch.setattr('scm_source.cli.generate_scm_source', lambda x, y, z, q, r: True)
     runner = CliRunner()
     result = runner.invoke(main, [], catch_exceptions=False)
     assert 'Generating scm-source.json.. LOCALLY MODIFIED' in result.output
 
 
 def test_directory_arg(monkeypatch):
-    def generate_scm_source(x, y, directory, fatal_on_modified):
+    def generate_scm_source(x, y, directory, fatal_on_modified, remote):
         assert 'mydir' == directory
         return False
     monkeypatch.setattr('scm_source.cli.generate_scm_source', generate_scm_source)
@@ -43,7 +43,7 @@ def test_directory_multiple_args(monkeypatch):
 
 
 def test_fail_on_modified_with_flag(monkeypatch):
-    def mocked_generate_scm_source(x, y, z, fail_on_modified):
+    def mocked_generate_scm_source(x, y, z, fail_on_modified, remote):
         raise RuntimeError
     monkeypatch.setattr('scm_source.cli.generate_scm_source', mocked_generate_scm_source)
     runner = CliRunner()
@@ -54,7 +54,7 @@ def test_fail_on_modified_with_flag(monkeypatch):
 
 
 def test_no_fail_on_modified_without_flag(monkeypatch):
-    def mocked_generate_scm_source(x, y, z, fail_on_modified):
+    def mocked_generate_scm_source(x, y, z, fail_on_modified, remote):
         return 'non empty status'
     monkeypatch.setattr('scm_source.cli.generate_scm_source', mocked_generate_scm_source)
     runner = CliRunner()

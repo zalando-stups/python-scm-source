@@ -8,7 +8,9 @@ from .api import generate_scm_source
 @click.option('--author', metavar='USER', envvar='USER', help='author of the scm-source.json (default: current $USER)')
 @click.argument('directory', nargs=-1, type=click.Path(exists=True))
 @click.option('--fail-on-modified', help="fails on locally modified code tree", is_flag=True)
-def main(file, author, directory, fail_on_modified):
+@click.option('--remote', metavar='REMOTE', default='origin',
+              help='The URL to the main repository or the name of the respective remote (default: origin)')
+def main(file, author, directory, fail_on_modified, remote):
     if not directory:
         directory = None
     elif len(directory) == 1:
@@ -17,7 +19,7 @@ def main(file, author, directory, fail_on_modified):
         raise click.UsageError('At most one directory can be given')
     with Action('Generating {}..'.format(file)) as act:
         try:
-            if generate_scm_source(file, author, directory, fail_on_modified):
+            if generate_scm_source(file, author, directory, fail_on_modified, remote):
                 act.warning('LOCALLY MODIFIED')
         except RuntimeError as e:
             act.fatal_error(str(e))
